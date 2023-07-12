@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css">
+    <!-- Include Bootstrap CSS and JavaScript -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+    {% if error_message == 1 %}
+        <div class="alert alert-info alert-dismissible fade show" style="margin-bottom: 0;" role="alert">
+            <div class="text-center">
+                <p>You have entered a name for a city or a country that's wrong or alread in list!</p>
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+
+    {% if success_message == 1 %}
+        <div class="alert alert-info alert-dismissible fade show" style="margin-bottom: 0;" role="alert">
+            <div class="text-center">
+                <p>A new Location added successfully!</p>
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+
+
+    <section class="hero is-primary" style="background-color: #2a9d8f;">
+        <div class="hero-body" style="padding: 0; margin: 15px;">
+            <div class="container">
+                <h1 class="title">
+                    What's the weather?
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style='padding-bottom: 0; margin-bottom: 0;'>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                {{ form.name }}
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-info">
+                                    Add City
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                    <div class="column is-offset-4 is-4">
+                        {% for city_weather in weather_data %}
+                            <div class="box" style="background-color: #f1cb6a; box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 2px #18494965">
+                                <article class="media">
+                                    <div class="media-left">
+                                        <figure class="image" style="margin: 15px; margin-top: 25px;">
+                                            <img src="https://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Image">
+                                        </figure>
+                                    </div>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <span class="title">{{ city_weather.city }}</span>
+                                                <br>
+                                                <span class="subtitle">{{ city_weather.temperature }} °C</span>
+                                                <br> {{ city_weather.description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        {% endfor %}
+                    </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+
+    </footer>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
